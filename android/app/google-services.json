@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "510053604778",
+    "project_id": "easyquick-beta",
+    "storage_bucket": "easyquick-beta.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:510053604778:android:45cef4eb49a1d86f8f1fd3",
+        "android_client_info": {
+          "package_name": "com.easyquick.easy_quick"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "510053604778-84l2hu2c2n18sq87sopfrqof899nbnv2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnGX7oPtz31lj2cJymzby3y7gQW96Q9Ao"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "510053604778-84l2hu2c2n18sq87sopfrqof899nbnv2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
