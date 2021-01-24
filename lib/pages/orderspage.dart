@@ -84,25 +84,25 @@ class _OrdersPageState extends State<OrdersPage> {
         body: TabBarView(
           children: [
         Container(
-        child: ListView.builder(
-        itemCount: null == _posts ? 0 : _posts.length,
-          physics: BouncingScrollPhysics(),
-          itemBuilder: (context, index) {
-            Post post = _posts[index];
-            return Card(
-              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 3.0),
-              elevation: 1,
-              shadowColor: Colors.black,
-              child: ListTile(
-                leading: Image.network(post.thumbnailUrl),
-                title: Text("Previous Purchase", style: Constants.regularDarkText),
-                subtitle: Text(post.title, style: Constants.descriptionText),
-                trailing: Text("X.XX", style: Constants.regularHeading),
-              ),
-            );
-          },
+          child: ListView.builder(
+            itemCount: null == _posts ? 0 : _posts.length,
+            physics: BouncingScrollPhysics(),
+            itemBuilder: (context, index) {
+              Post post = _posts[index];
+              return Card(
+                margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 3.0),
+                elevation: 1,
+                shadowColor: Colors.black,
+                child: ListTile(
+                  leading: Image.network(post.thumbnailUrl),
+                  title: Text("Previous Purchase", style: Constants.regularDarkText),
+                  subtitle: Text(post.title, style: Constants.descriptionText),
+                  trailing: Text("X.XX", style: Constants.regularHeading),
+                ),
+              );
+              },
+          ),
         ),
-      ),
             Container(
               child: ListView.builder(
                 itemCount: null == _posts ? 0 : _posts.length,
