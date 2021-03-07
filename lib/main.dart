@@ -1,46 +1,59 @@
 import 'package:easy_quick/pages/landingpage.dart';
-import 'package:easy_quick/pages/loginpage.dart';
-import 'package:easy_quick/pages/savedpage.dart';
-import 'package:easy_quick/pages/settingspage.dart';
-import 'package:easy_quick/pages/welcome_page.dart';
-import 'package:easy_quick/widgets/navigator.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:easy_quick/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_quick/pages/homepage.dart';
-import 'package:easy_quick/pages/loadingpage.dart';
-import 'package:easy_quick/pages/explorepage.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart' as pathProvider;
+import 'package:provider/provider.dart';
 
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final appDocumentDirectory =
+      await pathProvider.getApplicationDocumentsDirectory();
 
+  Hive.init(appDocumentDirectory.path);
 
-void main() {
-  runApp(MyApp());
+  final settings = await Hive.openBox('settings');
+  bool isLightTheme = settings.get('isLightTheme') ?? false;
+
+  print(isLightTheme);
+
+  runApp(ChangeNotifierProvider(
+      create: (_) => ThemeProvider(isLightTheme: isLightTheme),
+      child: AppStart(),
+  ));
 }
 
-class MyApp extends StatelessWidget {
-  //root of application
+// to ensure we have the themeProvider before the app starts lets make a few more changes
+class AppStart extends StatelessWidget {
+  const AppStart({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    ThemeProvider themeProvider = Provider.of<ThemeProvider>(context);
+    return MyApp(themeProvider: themeProvider,);
+  }
+}
+
+class MyApp extends StatefulWidget with WidgetsBindingObserver {
+  final ThemeProvider themeProvider;
+
+  const MyApp({Key key, @required this.themeProvider}) : super(key: key);
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: LandingPage(),
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        textTheme: GoogleFonts.ubuntuTextTheme(
-          Theme.of(context).textTheme,
-        ),
-      ),
+      theme: widget.themeProvider.themeData(context),
     );
   }
 }
 
- // initialRoute: '/', //loading screen is the first screen to pop up
-  //routes: { //different screens
-   // '/': (context) => LoadingPage(),
-    //'/homepage': (context) => Homepage(),
-    //'/explorePage' : (context) => ExplorePage(),
-
-  //},
-//));
-
-
-
+// ThemeData(
+//         textTheme: GoogleFonts.ubuntuTextTheme(Theme.of(context).textTheme),
+//       ),

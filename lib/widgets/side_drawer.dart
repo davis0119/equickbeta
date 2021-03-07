@@ -1,44 +1,75 @@
-import 'package:easy_quick/pages/settingspage.dart';
+import 'package:easy_quick/pages/savedpage.dart';
+import 'package:easy_quick/pages/settings_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
+import 'package:easy_quick/theme.dart';
 import '../constants.dart';
 
 class SideDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Drawer(
       elevation: 0,
       child: ListView(
         children: <Widget>[
-          DrawerHeader(child: null),
+          DrawerHeader(
+              child: CircleAvatar(
+                backgroundColor: themeProvider.themeData(context).backgroundColor,
+              ),
+          ),
           ListTile(
-            leading: Icon(Icons.bookmark),
-            title: Text('Saved', style: Constants.regularDarkText),
+            leading: Icon(
+              Icons.bookmark,
+              color: themeProvider.themeMode().iconColor,
+            ),
+            title: Text('Saved',
+                style: themeProvider.isLightTheme
+                    ? Constants.itemTitleLightThemeText
+                    : Constants.itemTitleDarkThemeText),
             onTap: () {
-              Navigator.of(context).pushReplacementNamed('saved');
+              Navigator.push(context,
+                  CupertinoPageRoute(builder: (context) => SavedPage()));
             },
           ),
           ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Settings', style: Constants.regularDarkText),
+            leading: Icon(Icons.settings,
+                color: themeProvider.themeMode().iconColor),
+            title: Text('Settings',
+                style: themeProvider.isLightTheme
+                    ? Constants.itemTitleLightThemeText
+                    : Constants.itemTitleDarkThemeText),
             onTap: () {
-              Navigator.of(context).pushReplacementNamed('settings');
+              Navigator.push(context,
+                  CupertinoPageRoute(builder: (context) => SettingsPage()));
             },
           ),
           ListTile(
-            leading: Icon(Icons.credit_card),
-            title: Text('Payments', style: Constants.regularDarkText),
+            leading: Icon(Icons.credit_card,
+                color: themeProvider.themeMode().iconColor),
+            title: Text('Payments',
+                style: themeProvider.isLightTheme
+                    ? Constants.itemTitleLightThemeText
+                    : Constants.itemTitleDarkThemeText),
             onTap: null,
           ),
           ListTile(
-            leading: Icon(Icons.shopping_cart),
-            title: Text('Cart', style: Constants.regularDarkText),
+            leading: Icon(Icons.shopping_cart,
+                color: themeProvider.themeMode().iconColor),
+            title: Text('Cart',
+                style: themeProvider.isLightTheme
+                    ? Constants.itemTitleLightThemeText
+                    : Constants.itemTitleDarkThemeText),
             onTap: null,
           ),
           ListTile(
-            leading: Icon(Icons.info_outline),
-            title: Text('Account Information', style: Constants.regularDarkText),
+            leading: Icon(Icons.info_outline,
+                color: themeProvider.themeMode().iconColor),
+            title: Text('Account Information',
+                style: themeProvider.isLightTheme
+                    ? Constants.itemTitleLightThemeText
+                    : Constants.itemTitleDarkThemeText),
             onTap: null,
           ),
         ],
@@ -46,4 +77,3 @@ class SideDrawer extends StatelessWidget {
     );
   }
 }
-

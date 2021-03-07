@@ -8,8 +8,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:easy_quick/theme.dart';
 
 import '../constants.dart';
+import 'forget_password.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -17,13 +20,13 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   // Build an alert dialog to display some errors
   // Replace with a SnackBar
   Future<void> _alertDialogBuilder(String error) async {
     return showDialog(
       context: context,
-      barrierDismissible: false, // button has to be clicked to dismiss message when false
+      barrierDismissible: false,
+      // button has to be clicked to dismiss message when false
       builder: (context) {
         return AlertDialog(
           title: Text("Error"),
@@ -35,8 +38,7 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text("Close Dialog")
-            )
+                child: Text("Close Dialog"))
           ],
         );
       },
@@ -47,9 +49,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<String> _loginAccount() async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: _loginEmail,
-          password: _loginPassword
-      );
+          email: _loginEmail, password: _loginPassword);
       return null;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -64,7 +64,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _submitForm() async {
-
     // Set the form to loading state
     setState(() {
       _loginFormLoading = true;
@@ -74,8 +73,9 @@ class _LoginPageState extends State<LoginPage> {
     String _loginFeedback = await _loginAccount();
 
     // If the string is not null, we got error while creating the account
-    if(_loginFeedback != null) {
-      _alertDialogBuilder(_loginFeedback); // tells what the error is in the dialog
+    if (_loginFeedback != null) {
+      _alertDialogBuilder(
+          _loginFeedback); // tells what the error is in the dialog
 
       // Set the form to regular state (not loading)
       setState(() {
@@ -108,19 +108,23 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       resizeToAvoidBottomPadding: false,
-      backgroundColor: Colors.white,
+      backgroundColor: themeProvider.themeData(context).backgroundColor,
       appBar: AppBar(
         elevation: 0,
-        brightness: Brightness.light,
-        backgroundColor: Colors.white,
+        backgroundColor: themeProvider.themeData(context).backgroundColor,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(Icons.arrow_back_ios, size: 20, color: Colors.black,),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            size: 20,
+            color: themeProvider.themeMode().iconColor,
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -135,14 +139,28 @@ class _LoginPageState extends State<LoginPage> {
                 children: <Widget>[
                   Column(
                     children: <Widget>[
-                    FadeAnimation(1, Text("Login", style: GoogleFonts.cabinSketch(
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 50,
-                      color: Colors.black,
-                    ),),),
-                      SizedBox(height: 20,),
-                      FadeAnimation(1.1, Text("Login to your account", style: Constants.regularLightText),
+                      FadeAnimation(
+                        1,
+                        Text(
+                          "Login",
+                          style: themeProvider.isLightTheme
+                              ? Constants.authLightThemePageTitle
+                              : Constants.authDarkThemePageTitle,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      FadeAnimation(
+                        1.1,
+                        Text(
+                          "Login to your account",
+                          style: themeProvider.isLightTheme
+                              ? Constants.authDescriptionLightThemeText
+                              : Constants.authDescriptionDarkThemeText,
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ],
                   ),
@@ -150,45 +168,90 @@ class _LoginPageState extends State<LoginPage> {
                     padding: EdgeInsets.symmetric(horizontal: 40, vertical: 30),
                     child: Column(
                       children: <Widget>[
-                      FadeAnimation(1.15, makeInput(label: "Email")),
-                        FadeAnimation(1.2, makeInput(label: "Password", obscureText: true)),
+                        FadeAnimation(
+                            1.15, makeInput(label: "Email", context: context)),
+                        FadeAnimation(
+                            1.2,
+                            makeInput(
+                                label: "Password",
+                                obscureText: true,
+                                context: context)),
+                        FadeAnimation(
+                          1.25,
+                          Row(
+                            children: <Widget>[
+                              Text("Forgot your Password?",
+                                  style: themeProvider.isLightTheme
+                                      ? Constants.linkLightThemeText
+                                      : Constants.linkDarkThemeText),
+                              IconButton(
+                                onPressed: () {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      CupertinoPageRoute(
+                                          builder: (context) =>
+                                              ForgetPasswordPage()));
+                                },
+                                icon: Icon(Icons.arrow_forward_ios,
+                                    color: themeProvider.themeMode().iconColor),
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                  FadeAnimation(1.3, Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-                    child: Container(
-                      child: MaterialButton(
-                        minWidth: double.infinity,
-                        height: 60,
-                        onPressed: () {
-                          //_submitForm();
-                          Navigator.pushReplacement(context,  CupertinoPageRoute(builder: (context) => Navigation()));
-                        },
-                        color: Colors.greenAccent,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50),
+                  FadeAnimation(
+                      1.3,
+                      Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                        child: Container(
+                          child: MaterialButton(
+                            minWidth: double.infinity,
+                            height: 60,
+                            onPressed: () {
+                              //_submitForm();
+                              Navigator.pushReplacement(
+                                  context,
+                                  CupertinoPageRoute(
+                                      builder: (context) => Navigation()));
+                            },
+                            color: themeProvider.themeMode().gradient[0],
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: Text("Login",
+                                style: themeProvider.isLightTheme
+                                    ? Constants.buttonLightThemeText
+                                    : Constants.buttonDarkThemeText),
+                          ),
                         ),
-                        child: Text("Login", style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18,
-                        ),),
-                      ),
-                    ),
-                  )),
-                  FadeAnimation(1.4, Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text("Don't have an account? Sign Up", style: Constants.regularDarkText,),
-                      IconButton(
-                        onPressed: () {
-                          Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => RegisterPage()));
-                        },
-                        icon: Icon(Icons.arrow_forward_ios, size: 20, color: Colors.black),
-                      ),
-                    ],
-                  )),
+                      )),
+                  FadeAnimation(
+                      1.4,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            "Don't have an account? Sign Up",
+                            style: themeProvider.isLightTheme
+                                ? Constants.linkLightThemeText
+                                : Constants.linkDarkThemeText,
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  CupertinoPageRoute(
+                                      builder: (context) => RegisterPage()));
+                            },
+                            icon: Icon(Icons.arrow_forward_ios,
+                                color: themeProvider.themeMode().iconColor),
+                          ),
+                        ],
+                      )),
                 ],
               ),
             ],
@@ -199,102 +262,39 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
-Widget makeInput({label, obscureText = false}) {
+Widget makeInput({label, obscureText = false, BuildContext context}) {
+  final themeProvider = Provider.of<ThemeProvider>(context);
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
-      Text(label, style: Constants.regularDarkText,),
-      SizedBox(height: 5,),
+      Text(
+        label,
+        style: themeProvider.isLightTheme
+            ? Constants.linkLightThemeText
+            : Constants.linkDarkThemeText,
+      ),
+      SizedBox(
+        height: 5,
+      ),
       TextField(
         obscureText: obscureText,
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey[400],)
-            ),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey[400],),
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: themeProvider.themeMode().gradient[0],
             ),
           ),
+          border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: themeProvider.themeMode().backgroundColor,
+            ),
+          ),
+        ),
       ),
-      SizedBox(height: 30,),
+      SizedBox(
+        height: 30,
+      ),
     ],
   );
 }
-
-// Scaffold(
-//       body: SafeArea(
-//         child: Container(
-//           width: double.infinity,
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             children: [
-//               Container(
-//                 padding: EdgeInsets.only(
-//                     top: 24.0
-//                 ),
-//                 child: Text(
-//                   "Heading",
-//                   textAlign: TextAlign.center,
-//                   style: Constants.boldHeading,
-//                 ),
-//               ), // Heading
-//               Column(
-//                   children: [
-//                     CustomInput(
-//                       hintText: "Email...",
-//                       onChanged: (value) {
-//                         _loginEmail = value;
-//                       },
-//                       onSubmitted: (value) {
-//                         _passwordFocusNode.requestFocus(); // once email is submitted focus changes to password field
-//                       },
-//                       textInputAction: TextInputAction.next,
-//                     ),
-//                     CustomInput(
-//                       hintText: "Password...",
-//                       onChanged: (value) {
-//                         _loginPassword = value;
-//                       },
-//                       focusNode: _passwordFocusNode,
-//                       obscureText: true,
-//                       onSubmitted: (value) {
-//                         _submitForm();
-//                       },
-//                     ),
-//                     CustomBtn(
-//                       text: "Login",
-//                       onPressed: () {
-//                         _submitForm();
-//                       },
-//                       outlineBtn: false,
-//                       isLoading: _loginFormLoading,
-//                     ), // Create New Account Button
-//                   ]
-//               ),
-//               CustomBtn(
-//                 text: "Create New Account",
-//                 onPressed: () {
-//                   Navigator.push(
-//                       context,
-//                       MaterialPageRoute(
-//                           builder: (context) => RegisterPage(),
-//                       )
-//                   );
-//                 },
-//                 outlineBtn: true,
-//               ), // Create New Account Button
-//             ],
-//           ),
-//         ),
-//       ),
-//     )
-
-// FadeAnimation(1.2, Container(
-//                 height: MediaQuery.of(context).size.height / 4,
-//                 decoration: BoxDecoration(
-//                   image: DecorationImage(
-//                     image: AssetImage('assets/image/loginillustration.png'),
-//                   ),
-//                 ),
-//               ))

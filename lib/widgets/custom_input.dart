@@ -41,7 +41,7 @@ class CustomInput extends StatelessWidget {
             vertical: 18.0,
           )
         ),
-        style: Constants.regularDarkText,
+        style: Constants.itemTitleLightThemeText,
       ),
     );
   }

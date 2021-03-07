@@ -63,12 +63,7 @@ class LandingPage extends StatelessWidget {
                     body: Center(
                       child: Text(
                         "Loading . . .",
-                        style: GoogleFonts.cabinSketch(
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 50,
-                          color: Colors.black,
-                        ),
+                        style: Constants.authLightThemePageTitle
                       ), //can add Loading Indicator here later
                     ),
                   );
@@ -81,12 +76,7 @@ class LandingPage extends StatelessWidget {
             body: Center(
               child: Text(
                 "Initialization App...",
-                style: GoogleFonts.cabinSketch(
-                  fontStyle: FontStyle.normal,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 50,
-                  color: Colors.black,
-                ),
+                style: Constants.authLightThemePageTitle
               ), //can add Loading Indicator here later
             ),
           );
