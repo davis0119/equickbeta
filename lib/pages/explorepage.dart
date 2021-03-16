@@ -19,10 +19,27 @@ class ExplorePage extends StatefulWidget {
 Color PrimaryColor = Colors.white;
 
 class _ExplorePageState extends State<ExplorePage> {
-
   List<Post> _posts;
   bool _loading;
+
+  List<String> _testImages = <String>[
+    'polaroid.jpg',
+    'backpack.jpg',
+    'hoodie.jpg',
+    'painting.jpg',
+    'sweatpants.jpg',
+    'textbook.jpg'
+  ];
   var rng = new Random();
+  static const _chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  static const _nums = '0123456789';
+  Random _rnd = Random();
+
+  String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
+      length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+
+  String getRandomDouble(int length) => String.fromCharCodes(Iterable.generate(
+      length, (_) => _nums.codeUnitAt(_rnd.nextInt(_nums.length))));
 
   @override
   void initState() {
@@ -58,16 +75,20 @@ class _ExplorePageState extends State<ExplorePage> {
                 setState(() {
                   switch (index) {
                     case 0:
-                      PrimaryColor = themeProvider.themeData(context).backgroundColor;
+                      PrimaryColor =
+                          themeProvider.themeData(context).backgroundColor;
                       break;
                     case 1:
-                      PrimaryColor = themeProvider.themeData(context).backgroundColor;
+                      PrimaryColor =
+                          themeProvider.themeData(context).backgroundColor;
                       break;
                     case 2:
-                      PrimaryColor = themeProvider.themeData(context).backgroundColor;
+                      PrimaryColor =
+                          themeProvider.themeData(context).backgroundColor;
                       break;
                     case 3:
-                      PrimaryColor = themeProvider.themeData(context).backgroundColor;
+                      PrimaryColor =
+                          themeProvider.themeData(context).backgroundColor;
                       break;
                     default:
                   }
@@ -78,7 +99,9 @@ class _ExplorePageState extends State<ExplorePage> {
                   child: Container(
                     child: Text(
                       "Items",
-                      style: themeProvider.isLightTheme ? Constants.tabLightThemeHeading : Constants.tabDarkThemeHeading,
+                      style: themeProvider.isLightTheme
+                          ? Constants.tabLightThemeHeading
+                          : Constants.tabDarkThemeHeading,
                     ),
                   ),
                 ),
@@ -86,7 +109,9 @@ class _ExplorePageState extends State<ExplorePage> {
                   child: Container(
                     child: Text(
                       "Services",
-                      style: themeProvider.isLightTheme ? Constants.tabLightThemeHeading : Constants.tabDarkThemeHeading,
+                      style: themeProvider.isLightTheme
+                          ? Constants.tabLightThemeHeading
+                          : Constants.tabDarkThemeHeading,
                     ),
                   ),
                 ),
@@ -94,7 +119,9 @@ class _ExplorePageState extends State<ExplorePage> {
                   child: Container(
                     child: Text(
                       "Auctions",
-                      style: themeProvider.isLightTheme ? Constants.tabLightThemeHeading : Constants.tabDarkThemeHeading,
+                      style: themeProvider.isLightTheme
+                          ? Constants.tabLightThemeHeading
+                          : Constants.tabDarkThemeHeading,
                     ),
                   ),
                 ),
@@ -102,7 +129,9 @@ class _ExplorePageState extends State<ExplorePage> {
                   child: Container(
                     child: Text(
                       "Odd Jobs",
-                      style: themeProvider.isLightTheme ? Constants.tabLightThemeHeading : Constants.tabDarkThemeHeading,
+                      style: themeProvider.isLightTheme
+                          ? Constants.tabLightThemeHeading
+                          : Constants.tabDarkThemeHeading,
                     ),
                   ),
                 )
@@ -119,19 +148,21 @@ class _ExplorePageState extends State<ExplorePage> {
                   itemBuilder: (context, index) {
                     Post post = _posts[index];
                     return GestureDetector(
-                      onTap: () =>
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => ProductDetailPage(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => ProductDetailPage(
                                   id: post.id,
                                   description: post.title,
-                                  name: 'Random Item',
-                                  price: 'X.XX',
-                                  img: post.thumbnailUrl,
-                                )
-                            ),
-                          ),
+                                  name: 'Item ' + getRandomString(1),
+                                  price: '\$' +
+                                      getRandomDouble(2) +
+                                      '.' +
+                                      getRandomDouble(2),
+                                  img: _testImages[
+                                      rng.nextInt(6)], //post.thumbnailUrl,
+                                )),
+                      ),
                       child: Column(
                         children: [
                           Container(
@@ -148,11 +179,14 @@ class _ExplorePageState extends State<ExplorePage> {
                               children: <Widget>[
                                 Flexible(
                                   flex: 1,
+                                  fit: FlexFit.tight,
                                   child: Hero(
                                     tag: 'dash',
                                     child: Container(
-                                      color: themeProvider.themeMode().gradient[rng.nextInt(11)],
-                                    ),
+                                      color: themeProvider
+                                          .themeMode()
+                                          .gradient[rng.nextInt(11)],
+                                    ), // post.thumbnailUrl, Image.asset('assets/images/' + _testImages[rng.nextInt(6)])
                                   ),
                                 ),
                                 SizedBox(width: 5),
@@ -160,13 +194,24 @@ class _ExplorePageState extends State<ExplorePage> {
                                   flex: 3,
                                   fit: FlexFit.tight,
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
                                     children: <Widget>[
-                                      Text('Random Item',
-                                          style: themeProvider.isLightTheme ? Constants.itemTitleLightThemeText : Constants.itemTitleDarkThemeText,
+                                      Text(
+                                        'Item ' + getRandomString(1),
+                                        style: themeProvider.isLightTheme
+                                            ? Constants.itemTitleLightThemeText
+                                            : Constants.itemTitleDarkThemeText,
                                       ),
-                                      Text(post.title, style: themeProvider.isLightTheme ? Constants.itemDescriptionLightThemeText : Constants.itemDescriptionDarkThemeText,
+                                      Text(
+                                        post.title,
+                                        style: themeProvider.isLightTheme
+                                            ? Constants
+                                                .itemDescriptionLightThemeText
+                                            : Constants
+                                                .itemDescriptionDarkThemeText,
                                         softWrap: true,
                                         maxLines: 3,
                                         overflow: TextOverflow.ellipsis,
@@ -176,8 +221,13 @@ class _ExplorePageState extends State<ExplorePage> {
                                 ),
                                 SizedBox(width: 5),
                                 Text(
-                                  'X.XX',
-                                  style: themeProvider.isLightTheme ? Constants.itemTitleLightThemeText : Constants.itemTitleDarkThemeText,
+                                  '\$' +
+                                      getRandomDouble(2) +
+                                      '.' +
+                                      getRandomDouble(2),
+                                  style: themeProvider.isLightTheme
+                                      ? Constants.itemTitleLightThemeText
+                                      : Constants.itemTitleDarkThemeText,
                                 ),
                               ],
                             ),
@@ -197,19 +247,17 @@ class _ExplorePageState extends State<ExplorePage> {
                   itemBuilder: (context, index) {
                     Post post = _posts[index];
                     return GestureDetector(
-                      onTap: () =>
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => ProductDetailPage(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => ProductDetailPage(
                                   id: post.id,
                                   description: post.title,
                                   name: 'Random Service',
                                   price: 'X.XX',
                                   img: post.thumbnailUrl,
-                                )
-                            ),
-                          ),
+                                )),
+                      ),
                       child: Column(
                         children: [
                           Container(
@@ -238,13 +286,20 @@ class _ExplorePageState extends State<ExplorePage> {
                                   flex: 3,
                                   fit: FlexFit.tight,
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
                                     children: <Widget>[
-                                      Text('Random Service',
-                                        style: Constants.itemTitleLightThemeText,
+                                      Text(
+                                        'Random Service',
+                                        style:
+                                            Constants.itemTitleLightThemeText,
                                       ),
-                                      Text(post.title, style: Constants.itemDescriptionLightThemeText,
+                                      Text(
+                                        post.title,
+                                        style: Constants
+                                            .itemDescriptionLightThemeText,
                                         softWrap: true,
                                         maxLines: 3,
                                         overflow: TextOverflow.ellipsis,
@@ -275,19 +330,17 @@ class _ExplorePageState extends State<ExplorePage> {
                   itemBuilder: (context, index) {
                     Post post = _posts[index];
                     return GestureDetector(
-                      onTap: () =>
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => ProductDetailPage(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => ProductDetailPage(
                                   id: post.id,
                                   description: post.title,
                                   name: 'Random Auction',
                                   price: 'X.XX',
                                   img: post.thumbnailUrl,
-                                )
-                            ),
-                          ),
+                                )),
+                      ),
                       child: Column(
                         children: [
                           Container(
@@ -316,13 +369,20 @@ class _ExplorePageState extends State<ExplorePage> {
                                   flex: 3,
                                   fit: FlexFit.tight,
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
                                     children: <Widget>[
-                                      Text('Random Auction',
-                                        style: Constants.itemTitleLightThemeText,
+                                      Text(
+                                        'Random Auction',
+                                        style:
+                                            Constants.itemTitleLightThemeText,
                                       ),
-                                      Text(post.title, style: Constants.itemDescriptionLightThemeText,
+                                      Text(
+                                        post.title,
+                                        style: Constants
+                                            .itemDescriptionLightThemeText,
                                         softWrap: true,
                                         maxLines: 3,
                                         overflow: TextOverflow.ellipsis,
@@ -353,19 +413,17 @@ class _ExplorePageState extends State<ExplorePage> {
                   itemBuilder: (context, index) {
                     Post post = _posts[index];
                     return GestureDetector(
-                      onTap: () =>
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => ProductDetailPage(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => ProductDetailPage(
                                   id: post.id,
                                   description: post.title,
                                   name: 'Random Odd Job',
                                   price: 'X.XX',
                                   img: post.thumbnailUrl,
-                                )
-                            ),
-                          ),
+                                )),
+                      ),
                       child: Column(
                         children: [
                           Container(
@@ -394,13 +452,20 @@ class _ExplorePageState extends State<ExplorePage> {
                                   flex: 3,
                                   fit: FlexFit.tight,
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
                                     children: <Widget>[
-                                      Text('Random Odd Job',
-                                        style: Constants.itemTitleLightThemeText,
+                                      Text(
+                                        'Random Odd Job',
+                                        style:
+                                            Constants.itemTitleLightThemeText,
                                       ),
-                                      Text(post.title, style: Constants.itemDescriptionLightThemeText,
+                                      Text(
+                                        post.title,
+                                        style: Constants
+                                            .itemDescriptionLightThemeText,
                                         softWrap: true,
                                         maxLines: 3,
                                         overflow: TextOverflow.ellipsis,
@@ -430,3 +495,7 @@ class _ExplorePageState extends State<ExplorePage> {
     );
   }
 }
+
+//Container(
+//                                       color: themeProvider.themeMode().gradient[rng.nextInt(11)],
+//                                     ),

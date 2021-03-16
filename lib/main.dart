@@ -1,9 +1,13 @@
 import 'package:easy_quick/pages/landingpage.dart';
+import 'package:easy_quick/services/auth.dart';
 import 'package:easy_quick/theme.dart';
+import 'package:easy_quick/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as pathProvider;
 import 'package:provider/provider.dart';
+
+import 'Models/user.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,10 +50,13 @@ class MyApp extends StatefulWidget with WidgetsBindingObserver {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: LandingPage(),
-      debugShowCheckedModeBanner: false,
-      theme: widget.themeProvider.themeData(context),
+    return StreamProvider<User>.value(
+      value: AuthService().user, // listening to AuthService stream
+      child: MaterialApp(
+        home: Wrapper(), // Decides whether we go to authenticate first or explore page
+        debugShowCheckedModeBanner: false,
+        theme: widget.themeProvider.themeData(context),
+      ),
     );
   }
 }

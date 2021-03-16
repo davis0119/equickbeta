@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_quick/theme.dart';
@@ -18,6 +20,7 @@ class ProductDetailPage extends StatefulWidget {
 }
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
+
   int qty = 1;
 
   @override
@@ -67,14 +70,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         children: <Widget>[
           Hero(
             tag: 'dash',
-            child: Container(
-              width: 400,
-              height: 300,
-              color: Colors.redAccent,
-              //decoration: BoxDecoration(
-              //image: DecorationImage(image: AssetImage(widget.img),fit: BoxFit.cover)
-              //),
-            ),
+            child: Image.asset('assets/images/' + widget.img),
           ),
           SizedBox(height: 15),
           Padding(
@@ -149,3 +145,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     );
   }
 }
+
+//Container(
+//               width: 400,
+//               height: 300,
+//               color: Colors.redAccent,
+//               //decoration: BoxDecoration(
+//               //image: DecorationImage(image: AssetImage(widget.img),fit: BoxFit.cover)
+//               //),
+//             ),

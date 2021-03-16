@@ -1,10 +1,12 @@
 class User {
+  final String uid; // uid from firebase
   final int id;
   final String name;
   final String imageUrl;
   final bool isOnline;
 
   User({
+    this.uid,
     this.id,
     this.name,
     this.imageUrl,
