@@ -1,5 +1,4 @@
 import 'package:easy_quick/animations/FadeAnimation.dart';
-import 'package:easy_quick/pages/loginpage.dart';
 import 'package:easy_quick/pages/registerpage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,6 +7,7 @@ import 'package:easy_quick/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_quick/services/auth.dart';
 import '../constants.dart';
+import 'loginpage.dart';
 
 class ForgetPasswordPage extends StatefulWidget {
   @override
@@ -39,7 +39,6 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      resizeToAvoidBottomPadding: false,
       backgroundColor: themeProvider.themeData(context).backgroundColor,
       appBar: AppBar(
         elevation: 0,
