@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../constants.dart';
+import '../wrapper.dart';
 import 'loginpage.dart';
 
 class LandingPage extends StatelessWidget {
@@ -29,46 +30,8 @@ class LandingPage extends StatelessWidget {
           // Connection Initialized - Firebase App is running
           if (snapshot.connectionState == ConnectionState.done) {
 
-            // StreamBuilder cna check the login state live
-            return StreamBuilder(
-                stream: FirebaseAuth.instance.authStateChanges(),
-                builder: (context, streamsnapshot) {
-                  //if snapshot has error
-                  if (streamsnapshot.hasError) {
-                    return Scaffold(
-                      body: Center(
-                        child: Text("Error: ${streamsnapshot.error}"),
-                      ),
-                    );
-                  }
-
-                  // Connection State active - Do the user login check inside the
-                  // if statement
-                  if(streamsnapshot.connectionState == ConnectionState.active) {
-                    // Get the user
-                    User _user = streamsnapshot.data;
-
-                    // If the user is null, we're not logged in
-                    if(_user == null) {
-                      // the user is not logged in, head to log in page
-                      return WelcomePage();
-                    } else {
-                      //the user is logged in, head to homepage
-                      return WelcomePage();
-                    }
-                  }
-
-                  // Checking the auth state - Loading
-                  return Scaffold(
-                    body: Center(
-                      child: Text(
-                        "Loading . . .",
-                        style: Constants.authLightThemePageTitle
-                      ), //can add Loading Indicator here later
-                    ),
-                  );
-                },
-            );
+            // Wrapper checks authentication
+            return Wrapper();
           }
 
           //Connecting to Firebase - Loading
@@ -83,3 +46,44 @@ class LandingPage extends StatelessWidget {
         });
   }
 }
+
+/*StreamBuilder(
+stream: FirebaseAuth.instance.authStateChanges(),
+builder: (context, streamsnapshot) {
+//if snapshot has error
+if (streamsnapshot.hasError) {
+return Scaffold(
+body: Center(
+child: Text("Error: ${streamsnapshot.error}"),
+),
+);
+}
+
+// Connection State active - Do the user login check inside the
+// if statement
+if(streamsnapshot.connectionState == ConnectionState.active) {
+// Get the user
+User _user = streamsnapshot.data;
+
+// If the user is null, we're not logged in
+if(_user == null) {
+// the user is not logged in, head to log in page
+return WelcomePage();
+} else {
+//the user is logged in, head to homepage
+return WelcomePage();
+}
+}*/
+
+// Checking the auth state - Loading
+/*
+return Scaffold(
+body: Center(
+child: Text(
+"Loading . . .",
+style: Constants.authLightThemePageTitle
+), //can add Loading Indicator here later
+),
+);
+},
+);*/

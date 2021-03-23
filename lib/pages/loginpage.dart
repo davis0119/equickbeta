@@ -2,12 +2,14 @@ import 'package:easy_quick/animations/FadeAnimation.dart';
 import 'package:easy_quick/pages/registerpage.dart';
 import 'package:easy_quick/services/auth.dart';
 import 'package:easy_quick/widgets/loading.dart';
+import 'package:easy_quick/widgets/navigator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../constants.dart';
 import '../theme.dart';
+import 'forget_password.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -114,6 +116,9 @@ class _LoginPageState extends State<LoginPage> {
                           TextFormField(
                             validator: (val) => val.isEmpty ? 'Enter an email' : null,
                             obscureText: false,
+                            style: themeProvider.isLightTheme
+                                ? TextStyle(color: Colors.black)
+                                : TextStyle(color: Colors.white),
                             onChanged: (val) {
                               setState(() => email = val);
                             },
@@ -129,6 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                                   color: themeProvider.themeMode().backgroundColor,
                                 ),
                               ),
+
                             ),
                           ),
                           SizedBox(
@@ -153,6 +159,9 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           TextFormField(
                             validator: (val) => val.length < 6 ? 'Enter a password 6+ chars long' : null,
+                            style: themeProvider.isLightTheme
+                                ? TextStyle(color: Colors.black)
+                                : TextStyle(color: Colors.white),
                             obscureText: true,
                             onChanged: (val) {
                               setState(() => password = val);
@@ -193,7 +202,7 @@ class _LoginPageState extends State<LoginPage> {
                                 Navigator.pushReplacement(
                                     context,
                                     CupertinoPageRoute(
-                                        builder: (context) => RegisterPage()));
+                                        builder: (context) => ForgetPasswordPage()));
                               },
                               icon: Icon(Icons.arrow_forward_ios,
                                   color: themeProvider.themeMode().iconColor),
@@ -216,20 +225,27 @@ class _LoginPageState extends State<LoginPage> {
                               if (_formKey.currentState.validate()) {
                                 // loading while checking validation
                                 setState(() => loading = true);
-                                // if all text form fields are valid then register user
+                                // if all text form fields are valid then login user
                                 dynamic result = await _auth.signInWithEmailAndPassword(email, password);
                                 if (result == null) {
                                   // login unsuccessful
                                   setState(() {
-                                    error = 'can\'t login with these credentials';
                                     loading = false;
+                                    error = 'Can\'t login with these credentials.';
                                   });
 
                                   // display error in snack bar
-
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Container(
+                                            height: 20,
+                                            child: Center(child: Text(error, style: TextStyle(color: Colors.white)))
+                                        ),
+                                        backgroundColor: Colors.red,
+                                      )
+                                  );
                                 } else {
-                                  // login succesful
-
+                                  // login successful
                                 }
                               }
                               /*Navigator.push(

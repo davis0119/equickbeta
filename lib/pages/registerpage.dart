@@ -27,9 +27,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   String error = '';
 
-  // Default Form Loading State
-  bool _registerFormLoading = false;
-
   @override
   void initState() {
     super.initState();
@@ -88,7 +85,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     FadeAnimation(
                       1.05,
                       Text(
-                        "Create your account",
+                        "Create your account.",
                         style: themeProvider.isLightTheme
                             ? Constants.authDescriptionLightThemeText
                             : Constants.authDescriptionDarkThemeText,
@@ -114,6 +111,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                           TextFormField(
                             validator: (val) => val.isEmpty ? 'Enter an email' : null,
+                            style: themeProvider.isLightTheme
+                                ? TextStyle(color: Colors.black)
+                                : TextStyle(color: Colors.white),
                             obscureText: false,
                             onChanged: (val) {
                               setState(() => email = val);
@@ -155,6 +155,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           TextFormField(
                             validator: (val) => val.length < 6 ? 'Enter a password 6+ chars long' : null,
                             obscureText: true,
+                            style: themeProvider.isLightTheme
+                                ? TextStyle(color: Colors.black)
+                                : TextStyle(color: Colors.white),
                             onChanged: (val) {
                               setState(() => password = val);
                             },
@@ -194,6 +197,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                           TextFormField(
                             validator: (val) => val != password ? 'Passwords don\'t match' : null,
+                            style: themeProvider.isLightTheme
+                                ? TextStyle(color: Colors.black)
+                                : TextStyle(color: Colors.white),
                             obscureText: true,
                             onChanged: (val) {
                               setState(() => confirmPassword = val);
@@ -211,9 +217,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                 ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 30,
                           ),
                         ],
                       ),
@@ -236,14 +239,25 @@ class _RegisterPageState extends State<RegisterPage> {
                                 // if all text form fields are valid then register user
                                 dynamic result = await _auth.registerWithEmailAndPassword(email, password);
                                 if (result == null) {
-                                  // registered unsuccessfully
+                                  // registered unsuccessfully or emailed has not been verified
                                   setState(() {
-                                    error = 'please supply a valid email';
+                                    error = 'Check your email to verify this account.';
                                     loading = false;
                                   });
 
                                   // display error in snack bar
-                                  
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Container(
+                                        child: Center(child: Text(error, style: TextStyle(color: Colors.white))),
+                                        height: 20.0,
+                                      ),
+                                      backgroundColor: Colors.green,
+                                      duration: const Duration(milliseconds: 3000),
+
+
+                                    )
+                                  );
                                 } else {
                                   // registered successfully
 
@@ -260,7 +274,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               borderRadius: BorderRadius.circular(50),
                             ),
                             child: Text(
-                              "Sign Up",
+                              "Create Account",
                               style: themeProvider.isLightTheme
                                   ? Constants.buttonLightThemeText
                                   : Constants.buttonDarkThemeText,
@@ -273,7 +287,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Text(
-                              "Already have an account?  Login",
+                              "Verified your account ?  Login",
                               style: themeProvider.isLightTheme
                                   ? Constants.linkLightThemeText
                                   : Constants.linkDarkThemeText,

@@ -71,3 +71,14 @@ final User captainMarvel = User(
   imageUrl: 'assets/images/captain-marvel.jpg',
   isOnline: false,
 );
+
+class UserData {
+
+  final String uid;
+  final String name;
+  final String sugars;
+  final int strength;
+
+  UserData({this.uid, this.name, this.sugars, this.strength});
+
+}

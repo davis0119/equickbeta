@@ -11,6 +11,7 @@ class Loading extends StatelessWidget {
       color: themeProvider.themeData(context).backgroundColor,
       child: Center(
         child: SpinKitChasingDots(
+
           color: themeProvider.themeMode().gradient[3],
           size: 50.0,
         ),

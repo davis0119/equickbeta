@@ -9,12 +9,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class TestPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<List<TestUser>>.value(
-      value: DatabaseService().users,
-      child: Scaffold(
-        body: UserList(),
-
-      ),
-    );
+    return Container();
   }
 }

@@ -1,7 +1,9 @@
 import 'package:easy_quick/pages/landingpage.dart';
 import 'package:easy_quick/services/auth.dart';
 import 'package:easy_quick/theme.dart';
+import 'package:easy_quick/widgets/loading.dart';
 import 'package:easy_quick/wrapper.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as pathProvider;
@@ -34,7 +36,28 @@ class AppStart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeProvider themeProvider = Provider.of<ThemeProvider>(context);
-    return MyApp(themeProvider: themeProvider,);
+    return FutureBuilder(
+      future: Firebase.initializeApp(),
+        builder: (context, snapshot) {
+        // Check for errors
+          if (snapshot.hasError) {
+            return Scaffold(
+              body: Center(
+                child: Text("Error: ${snapshot.error}"),
+              ),
+            );
+          }
+
+          // Once complete, show your application
+          if (snapshot.connectionState == ConnectionState.done) {
+            return MyApp(themeProvider: themeProvider,);
+          }
+
+          // Otherwise, show something whilst waiting for initialization to complete
+          return Loading();
+        },
+        //child: MyApp(themeProvider: themeProvider,),
+    );
   }
 }
 

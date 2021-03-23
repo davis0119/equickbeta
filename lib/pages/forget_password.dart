@@ -17,6 +17,7 @@ class ForgetPasswordPage extends StatefulWidget {
 class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
+  bool loading = false;
 
   // text field state
   String email = '';
@@ -107,6 +108,9 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                                 ),
                                 TextFormField(
                                   validator: (val) => val.isEmpty ? 'Enter an email' : null,
+                                  style: themeProvider.isLightTheme
+                                      ? TextStyle(color: Colors.black)
+                                      : TextStyle(color: Colors.white),
                                   obscureText: false,
                                   onChanged: (val) {
                                     setState(() => email = val);
@@ -131,7 +135,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                               ],
                             ),
                           ),
-                          FadeAnimation(
+                          /*FadeAnimation(
                               1.2,
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,6 +151,9 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                                 ),
                                 TextFormField(
                                   validator: (val) => val.length < 6 ? 'Enter a password 6+ chars long' : null,
+                                  style: themeProvider.isLightTheme
+                                      ? TextStyle(color: Colors.black)
+                                      : TextStyle(color: Colors.white),
                                   obscureText: true,
                                   onChanged: (val) {
                                     setState(() => password = val);
@@ -170,7 +177,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                                 ),
                               ],
                             ),
-                          ),
+                          ),*/
                         ],
                       ),
                     ),
@@ -183,12 +190,29 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                             child: MaterialButton(
                               minWidth: double.infinity,
                               height: 60,
-                              onPressed: () {
+                              onPressed: () async {
+                                if (_formKey.currentState.validate()) {
+                                  // loading while checking validation
+                                  setState(() => loading = true);
+                                  // if all text form fields are valid send reset password email
+                                  dynamic result = await _auth.resetPassword(
+                                      email);
+                                  String msg = 'Check your email for password reset link.';
 
-                                Navigator.pushReplacement(
-                                    context,
-                                    CupertinoPageRoute(
-                                        builder: (context) => LoginPage()));
+                                  // display snack bar
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Container(
+                                          height: 20,
+                                          child: Center(child: Text(msg,
+                                              style: TextStyle(
+                                                  color: Colors.white))),
+                                        ),
+                                        backgroundColor: Colors.green,
+                                      )
+                                  );
+                                  Navigator.pop(context);
+                                }
                               },
                               color: themeProvider.themeMode().gradient[2],
                               elevation: 0,
@@ -196,7 +220,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                                 borderRadius: BorderRadius.circular(50),
                               ),
                               child: Text(
-                                "Change Password",
+                                "Reset Password",
                                 style: themeProvider.isLightTheme
                                     ? Constants.buttonLightThemeText
                                     : Constants.buttonDarkThemeText,

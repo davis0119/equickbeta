@@ -6,14 +6,13 @@ import 'package:easy_quick/theme.dart';
 import '../constants.dart';
 
 class ProductDetailPage extends StatefulWidget {
-  final int id;
-  final String name;
-  final String img;
+  final String name;// will remove later
   final String description;
   final String price;
+  final List<Image> photos;
 
   ProductDetailPage(
-      {this.id, this.name, this.img, this.description, this.price});
+      {this.name, this.description, this.price, this.photos});
 
   @override
   _ProductDetailPageState createState() => _ProductDetailPageState();
@@ -68,10 +67,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     return SafeArea(
       child: ListView(
         children: <Widget>[
-          Hero(
-            tag: 'dash',
-            child: Image.asset('assets/images/' + widget.img),
-          ),
+          // place picture here later
           SizedBox(height: 15),
           Padding(
             padding: const EdgeInsets.only(left: 20, right: 20),
