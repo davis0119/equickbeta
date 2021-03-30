@@ -5,7 +5,7 @@ import 'package:easy_quick/pages/productdetailpage.dart';
 import 'package:easy_quick/widgets/auction_listing.dart';
 import 'package:easy_quick/widgets/custom_appbar.dart';
 import 'package:easy_quick/widgets/item_listing.dart';
-import 'package:easy_quick/widgets/odd_job_listing.dart';
+import 'package:easy_quick/widgets/favor_listing.dart';
 import 'package:easy_quick/widgets/service_listing.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +19,6 @@ class ExplorePage extends StatefulWidget {
   @override
   _ExplorePageState createState() => _ExplorePageState();
 }
-
-Color PrimaryColor = Colors.white;
 
 class _ExplorePageState extends State<ExplorePage> {
   List<Post> _posts;
@@ -75,29 +73,6 @@ class _ExplorePageState extends State<ExplorePage> {
               indicatorColor: themeProvider.themeMode().gradient[3],
               //if white use lightBlueAccent
               indicatorWeight: 2.5,
-              onTap: (index) {
-                setState(() {
-                  switch (index) {
-                    case 0:
-                      PrimaryColor =
-                          themeProvider.themeData(context).backgroundColor;
-                      break;
-                    case 1:
-                      PrimaryColor =
-                          themeProvider.themeData(context).backgroundColor;
-                      break;
-                    case 2:
-                      PrimaryColor =
-                          themeProvider.themeData(context).backgroundColor;
-                      break;
-                    case 3:
-                      PrimaryColor =
-                          themeProvider.themeData(context).backgroundColor;
-                      break;
-                    default:
-                  }
-                });
-              },
               tabs: <Widget>[
                 Tab(
                   child: Container(
@@ -132,7 +107,7 @@ class _ExplorePageState extends State<ExplorePage> {
                 Tab(
                   child: Container(
                     child: Text(
-                      "Odd Jobs",
+                      "Favors",
                       style: themeProvider.isLightTheme
                           ? Constants.tabLightThemeHeading
                           : Constants.tabDarkThemeHeading,
@@ -190,8 +165,8 @@ class _ExplorePageState extends State<ExplorePage> {
                   physics: BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
                     Post post = _posts[index];
-                    return OddJobListing(
-                      oddjob: null,
+                    return FavorListing(
+                      favor: null,
                     );
                   },
                 ),

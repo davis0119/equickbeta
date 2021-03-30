@@ -1,21 +1,21 @@
-import 'package:easy_quick/Models/odd_job.dart';
+import 'package:easy_quick/Models/favor.dart';
 import 'package:easy_quick/pages/productdetailpage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
 import '../theme.dart';
 
-class OddJobListing extends StatefulWidget {
+class FavorListing extends StatefulWidget {
 
-  final Favor oddjob;
+  final Favor favor;
 
-  OddJobListing({this.oddjob});
+  FavorListing({this.favor});
 
   @override
-  _OddJobListingState createState() => _OddJobListingState();
+  _FavorListingState createState() => _FavorListingState();
 }
 
-class _OddJobListingState extends State<OddJobListing> {
+class _FavorListingState extends State<FavorListing> {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
@@ -45,7 +45,7 @@ class _OddJobListingState extends State<OddJobListing> {
                   fit: FlexFit.tight,
                   child: Hero(
                     tag: 'dash',
-                    child: widget.oddjob.photos[0], //
+                    child: widget.favor.photos[0], //
                   ),
                 ),
                 SizedBox(width: 5),
@@ -59,13 +59,13 @@ class _OddJobListingState extends State<OddJobListing> {
                     MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       Text(
-                        widget.oddjob.title,
+                        widget.favor.title,
                         style: themeProvider.isLightTheme
                             ? Constants.itemTitleLightThemeText
                             : Constants.itemTitleDarkThemeText,
                       ),
                       Text(
-                        widget.oddjob.description,
+                        widget.favor.description,
                         style: themeProvider.isLightTheme
                             ? Constants
                             .itemDescriptionLightThemeText
@@ -80,7 +80,7 @@ class _OddJobListingState extends State<OddJobListing> {
                 ),
                 SizedBox(width: 5),
                 Text(
-                  '${widget.oddjob.offer}',
+                  '${widget.favor.offer}',
                   style: themeProvider.isLightTheme
                       ? Constants.itemTitleLightThemeText
                       : Constants.itemTitleDarkThemeText,

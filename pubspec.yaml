@@ -31,6 +31,7 @@ dependencies:
   firebase_auth: ^1.0.1
   firebase_core: ^1.0.1
   cloud_firestore: ^1.0.1
+  firebase_storage: ^8.0.1
 
 
   # Google Fonts
@@ -41,6 +42,9 @@ dependencies:
 
   # Image Picker
   image_picker: ^0.7.2+1
+
+  # Image Cropper
+  image_cropper: ^1.4.0
 
   # Provider
   provider: ^4.3.3

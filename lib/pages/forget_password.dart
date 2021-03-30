@@ -1,13 +1,11 @@
 import 'package:easy_quick/animations/FadeAnimation.dart';
 import 'package:easy_quick/pages/registerpage.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_quick/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_quick/services/auth.dart';
 import '../constants.dart';
-import 'loginpage.dart';
 
 class ForgetPasswordPage extends StatefulWidget {
   @override

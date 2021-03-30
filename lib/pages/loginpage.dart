@@ -246,6 +246,18 @@ class _LoginPageState extends State<LoginPage> {
                                   );
                                 } else {
                                   // login successful
+                                  String msg = 'Login Successful';
+
+                                  // display error in snack bar
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Container(
+                                            height: 20,
+                                            child: Center(child: Text(msg, style: TextStyle(color: Colors.white)))
+                                        ),
+                                        backgroundColor: Colors.green,
+                                      )
+                                  );
                                 }
                               }
                               /*Navigator.push(

@@ -73,8 +73,12 @@ class MyApp extends StatefulWidget with WidgetsBindingObserver {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<User>.value(
-      value: AuthService().user, // listening to AuthService stream
+    return MultiProvider(
+      providers: [
+        StreamProvider<User>.value(
+          value: AuthService().user
+        ),
+      ], // listening to AuthService stream
       child: MaterialApp(
         home: Wrapper(), // Decides whether we go to authenticate first or explore page
         debugShowCheckedModeBanner: false,

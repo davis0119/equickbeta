@@ -66,18 +66,9 @@ class SideDrawer extends StatelessWidget {
             onTap: null,
           ),
           ListTile(
-            leading: Icon(Icons.info_outline,
-                color: themeProvider.themeMode().iconColor),
-            title: Text('Account Information',
-                style: themeProvider.isLightTheme
-                    ? Constants.itemTitleLightThemeText
-                    : Constants.itemTitleDarkThemeText),
-            onTap: null,
-          ),
-          ListTile(
             leading: Icon(Icons.logout,
                 color: themeProvider.themeMode().iconColor),
-            title: Text('Sign Out',
+            title: Text('Logout',
                 style: themeProvider.isLightTheme
                     ? Constants.itemTitleLightThemeText
                     : Constants.itemTitleDarkThemeText),
@@ -96,6 +87,35 @@ class SideDrawer extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context, rootNavigator: true).pop('dialog');
                         _auth.signOut();
+                      },
+                    )
+                  ],
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.logout,
+                color: themeProvider.themeMode().iconColor),
+            title: Text('Delete Account',
+                style: themeProvider.isLightTheme
+                    ? Constants.itemTitleLightThemeText
+                    : Constants.itemTitleDarkThemeText),
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (_) => CupertinoAlertDialog(
+                  title: Text('Delete Account ?'),
+                  actions: [
+                    CupertinoDialogAction(
+                      child: Text('No'),
+                      onPressed: () => Navigator.of(context, rootNavigator: true).pop('dialog'),
+                    ),
+                    CupertinoDialogAction(
+                      child: Text('Yes'),
+                      onPressed: () {
+                        Navigator.of(context, rootNavigator: true).pop('dialog');
+                        _auth.deleteAccount();
                     },
                     )
                   ],

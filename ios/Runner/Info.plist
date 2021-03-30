@@ -27,6 +27,12 @@
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UISupportedInterfaceOrientations</key>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>This app uses the library for testing purposes</string>
+    <key>NSCameraUsageDescription</key>
+    <string>This app uses the camera for testing purposes</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>This app uses the camera for testing purposes</string>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>

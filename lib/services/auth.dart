@@ -75,5 +75,14 @@ class AuthService {
   }
 
   // delete account
+  Future deleteAccount() async {
+    try {
+      await _auth.currentUser.delete();
+    } catch (e) {
+      if (e.code == 'requires-recent-login') {
+        print('The user must reauthenticate before this operation can be executed.');
+      }
+    }
+  }
 
 }
