@@ -42,6 +42,12 @@ class Constants {
   static const accountDescriptionLightThemeText =
   TextStyle(fontSize: 14.0, fontWeight: FontWeight.w500, color: Colors.black);
 
+  static const bottomSheetTitleLightThemeText =
+  TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600, color: Colors.black);
+
+  static const bottomSheetDescriptionLightThemeHeading =
+  TextStyle(fontSize: 14.0, fontWeight: FontWeight.w500, color: Color(0xAAE0E0E0));
+
   //Dark Theme Fonts
   static const authDarkThemePageTitle =
   TextStyle(fontSize: 45.0, fontWeight: FontWeight.w600, color: Color(0xFFFAFAFA));
@@ -78,4 +84,10 @@ class Constants {
 
   static const accountDescriptionDarkThemeText =
   TextStyle(fontSize: 14.0, fontWeight: FontWeight.w500, color: Color(0xAAE0E0E0));
+
+  static const bottomSheetTitleDarkThemeText =
+  TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600, color: Colors.white);
+
+  static const bottomSheetDescriptionDarkThemeHeading =
+  TextStyle(fontSize: 14.0, fontWeight: FontWeight.w500, color: Color(0xfff2f2f2));
 }

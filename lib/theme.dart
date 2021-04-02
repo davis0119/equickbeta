@@ -47,7 +47,7 @@ class ThemeProvider with ChangeNotifier {
 
         if (!isLightTheme) ...[Color(0xFFF2C9A5), Color(0xFFF69FBB), Color(0xFFB6E8A4),
           Color(0xFF51cfa0), Color(0xFF5e72a3), Color(0xFF323F4B),  Color(0xFFF2C9A5),
-          Color(0xFFF69FBB), Color(0xFFB6E8A4), Color(0xFF51cfa0), Color(0xFF5e72a3),]
+          Color(0xFFF69FBB), Color(0xFFB6E8A4), Color(0xFF51cfa0), Color(0xdd9575cd),]
       ],
       textColor: isLightTheme ? Color(0xFF000000) : Color(0xA6A6A6),
       iconColor: isLightTheme ? Color(0xFF000000) : Color(0xFF757575),

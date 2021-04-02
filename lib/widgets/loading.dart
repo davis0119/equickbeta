@@ -7,13 +7,17 @@ class Loading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    return Container(
-      color: themeProvider.themeData(context).backgroundColor,
-      child: Center(
-        child: SpinKitChasingDots(
+    return MaterialApp(
+      home: Scaffold(
+        body: Container(
+          color: themeProvider.themeData(context).backgroundColor,
+          child: Center(
+            child: SpinKitChasingDots(
 
-          color: themeProvider.themeMode().gradient[3],
-          size: 50.0,
+              color: themeProvider.themeMode().gradient[3],
+              size: 50.0,
+            ),
+          ),
         ),
       ),
     );

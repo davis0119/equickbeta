@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../theme.dart';
 
 class Uploader extends StatefulWidget {
   final File file;
@@ -24,6 +27,7 @@ class _UploaderState extends State<Uploader> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     if (_uploadTask != null) {
       return StreamBuilder<TaskSnapshot>(
           stream: _uploadTask.snapshotEvents,
@@ -40,6 +44,7 @@ class _UploaderState extends State<Uploader> {
               children: [
                 LinearProgressIndicator(
                   value: _progress,
+                  valueColor: AlwaysStoppedAnimation<Color>(themeProvider.themeMode().gradient[3]),
                 ),
                 Text('Uploading ${(_progress * 100).toStringAsFixed(2)} %'),
               ],

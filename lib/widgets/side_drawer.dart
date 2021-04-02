@@ -1,5 +1,7 @@
+import 'package:easy_quick/pages/item_post_page.dart';
 import 'package:easy_quick/pages/savedpage.dart';
 import 'package:easy_quick/pages/settings_page.dart';
+import 'package:easy_quick/pages/test_page1.dart';
 import 'package:easy_quick/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -122,6 +124,17 @@ class SideDrawer extends StatelessWidget {
                 ),
               );
             },
+          ),
+          ListTile(
+            leading: Icon(Icons.fifteen_mp,
+                color: themeProvider.themeMode().iconColor),
+            title: Text('Test Page',
+                style: themeProvider.isLightTheme
+                    ? Constants.itemTitleLightThemeText
+                    : Constants.itemTitleDarkThemeText),
+            onTap: () {
+              Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => ItemPostPage()));
+              },
           ),
         ],
       ),

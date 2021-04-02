@@ -46,6 +46,9 @@ dependencies:
   # Image Cropper
   image_cropper: ^1.4.0
 
+  # Image Carousel
+  carousel_slider: ^3.0.0
+
   # Provider
   provider: ^4.3.3
 

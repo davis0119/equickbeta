@@ -23,6 +23,16 @@ class _ImageCaptureState extends State<ImageCapture> {
     setState(() => _imageFile = selected);
   }
 
+  // Select an images via gallery or camera
+  Future<void> _pickImages(ImageSource source) async {
+    // Decides whether image is from gallery or camera
+    PickedFile selectedFile = await _imagePicker.getImage(source: source);
+    File selected = File(selectedFile.path);
+
+    setState(() => _imageFile = selected);
+  }
+
+  // Crop image
   Future<void> _cropImage() async {
     File cropped = await ImageCropper.cropImage(
       sourcePath: _imageFile.path, // creates newly cropped or modified image
