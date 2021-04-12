@@ -1,5 +1,6 @@
 import 'package:easy_quick/pages/accountpage.dart';
 import 'package:easy_quick/pages/explorepage.dart';
+import 'package:easy_quick/pages/item_post_page.dart';
 import 'package:easy_quick/pages/orderspage.dart';
 import 'package:easy_quick/pages/postpage.dart';
 import 'package:flutter/cupertino.dart';
@@ -91,7 +92,7 @@ class _NavigationState extends State<Navigation> {
           ),
           BottomNavigationBarItem(
             icon: IconButton(
-              icon: Icon(Icons.home),
+              icon: Icon(CupertinoIcons.chat_bubble_fill),
               onPressed: () {
                 _navigatorKey.currentState.pushReplacementNamed('/home_page');
                 setState(() {
@@ -99,7 +100,7 @@ class _NavigationState extends State<Navigation> {
                 });
               },
             ),
-            title: Text('Home'),
+            title: Text('Chats'),
           ),
           BottomNavigationBarItem(
             icon: IconButton(
@@ -173,8 +174,9 @@ class _NavigationState extends State<Navigation> {
                   children: [
                     RawMaterialButton(
                       onPressed:() {
-                        Navigator.pop(context);
-                        // TODO: Navigate to Post page
+                        Navigator.pushReplacement(
+                            context, MaterialPageRoute(builder: (context) => ItemPostPage())
+                        );
                       },
                       elevation: 0.0,
                       fillColor: Theme.of(context).canvasColor,

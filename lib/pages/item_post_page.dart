@@ -1,7 +1,7 @@
 import 'package:easy_quick/widgets/image_slideshow.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:flutter/cupertino.dart';
 import '../constants.dart';
 import '../theme.dart';
 
@@ -28,7 +28,23 @@ class _ItemPostPageState extends State<ItemPostPage> {
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              ImageCarousel(),
+              Stack(
+                  children: [
+                    Positioned(
+                      top: 4,
+                      left: 4,
+                      child: IconButton(
+                        icon: Icon(Icons.arrow_back_ios),
+                        color: themeProvider.themeMode().iconColor,
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ),
+                    ImageCarousel(),
+                  ]
+              ),
+              Divider(height: 10.0),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -148,6 +164,7 @@ class _ItemPostPageState extends State<ItemPostPage> {
                       suffixText: '(min.\$1/max.\$2000)',
                       prefixText: '\$',
                       floatingLabelBehavior: FloatingLabelBehavior.never,
+                      labelText: '(min.\$1/max.\$2000)',
 
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(

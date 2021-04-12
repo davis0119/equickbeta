@@ -1,7 +1,7 @@
 import 'package:easy_quick/pages/item_post_page.dart';
+import 'package:easy_quick/pages/productdetailpage.dart';
 import 'package:easy_quick/pages/savedpage.dart';
 import 'package:easy_quick/pages/settings_page.dart';
-import 'package:easy_quick/pages/test_page1.dart';
 import 'package:easy_quick/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -133,7 +133,7 @@ class SideDrawer extends StatelessWidget {
                     ? Constants.itemTitleLightThemeText
                     : Constants.itemTitleDarkThemeText),
             onTap: () {
-              Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => ItemPostPage()));
+              Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => ProductDetailPage()));
               },
           ),
         ],
