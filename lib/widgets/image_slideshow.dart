@@ -58,7 +58,7 @@ class _ImageCarouselState extends State<ImageCarousel> {
 
     setState(() {
       files[_current] = cropped ?? files[_current];
-      List<Widget> replacement = [Image.file(files[_current])];
+      Iterable<Widget> replacement = [Image.file(files[_current])] as Iterable<Widget>;
       photos.replaceRange(_current, _current + 1, replacement);
     });
   }

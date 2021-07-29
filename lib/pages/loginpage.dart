@@ -5,6 +5,7 @@ import 'package:easy_quick/widgets/loading.dart';
 import 'package:easy_quick/widgets/navigator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../constants.dart';
@@ -246,9 +247,12 @@ class _LoginPageState extends State<LoginPage> {
                                   );
                                 } else {
                                   // login successful
+                                  setState(() {
+                                    loading = false;
+                                  });
                                   String msg = 'Login Successful';
 
-                                  // display error in snack bar
+                                  // display success in snack bar
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         content: Container(
@@ -275,6 +279,67 @@ class _LoginPageState extends State<LoginPage> {
                               style: themeProvider.isLightTheme
                                   ? Constants.buttonLightThemeText
                                   : Constants.buttonDarkThemeText,
+                            ),
+                          ),
+                        )),
+                    FadeAnimation(
+                        1.35,
+                        Container(
+                          padding: EdgeInsets.only(top: 10, left: 3),
+                          child: MaterialButton(
+                            minWidth: double.infinity,
+                            height: 60,
+                            onPressed: () async {
+                              dynamic result = await _auth.googleSignIn();
+                              if (result == null) {
+                                // login unsuccessful
+                                setState(() {
+                                  loading = false;
+                                  error = 'Can\'t login with these credentials.';
+                                });
+
+                                // display error in snack bar
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Container(
+                                          height: 20,
+                                          child: Center(child: Text(error, style: TextStyle(color: Colors.white)))
+                                      ),
+                                      backgroundColor: Colors.red,
+                                    )
+                                );
+                              } else {
+                                // login successful
+                                String msg = 'Login Successful';
+
+                                // display success in snack bar
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Container(
+                                          height: 20,
+                                          child: Center(child: Text(msg, style: TextStyle(color: Colors.white)))
+                                      ),
+                                      backgroundColor: Colors.green,
+                                    )
+                                );
+                              }
+                            },
+                            color: themeProvider.themeData(context).dividerColor,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                FaIcon(FontAwesomeIcons.google),
+                                Text(
+                                  "Login With Google",
+                                  style: themeProvider.isLightTheme
+                                      ? Constants.buttonLightThemeText
+                                      : Constants.buttonDarkThemeText,
+                                ),
+                              ],
                             ),
                           ),
                         )),

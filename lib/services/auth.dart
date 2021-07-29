@@ -1,10 +1,12 @@
 import 'package:easy_quick/Models/user.dart';
 import 'package:easy_quick/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
 
   final auth.FirebaseAuth _auth = auth.FirebaseAuth.instance; // give us access to different methods
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   // create user object based on auth.User
   User _userFromFirebaseUser(auth.User user) {
@@ -60,6 +62,32 @@ class AuthService {
   }
 
   // sign in with google
+  Future<User> googleSignIn() async {
+    // Trigger authentication flow
+    GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+
+    // Obtain the auth details from the request
+    GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+    // Create a new credential
+    final credential = auth.GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken
+    );
+
+    try {
+      print('here');
+      // request auth result from Firebase
+      auth.UserCredential result = await _auth.signInWithCredential(credential);
+      auth.User user = result.user;
+
+      // We return custom user object
+      return _userFromFirebaseUser(user);
+    } catch(e) {
+      print(e.toString());
+      return null;
+    }
+  }
 
   // register with google
 

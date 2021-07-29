@@ -41,14 +41,14 @@ class ThemeProvider with ChangeNotifier {
   ThemeColor themeMode() {
     return ThemeColor(
       gradient: [
-        if (isLightTheme) ...[Colors.greenAccent, Colors.yellow, Colors.deepOrange[300],
+        if (isLightTheme) Colors.greenAccent, Colors.yellow, Colors.deepOrange[300],
           Colors.lightBlueAccent, Colors.cyan[50], Colors.grey[200], Colors.red[400],
-          Colors.blue[300], Colors.orange[300], Colors.purpleAccent, Colors.greenAccent[700]],
+          Colors.blue[300], Colors.orange[300], Colors.purpleAccent, Colors.greenAccent[700],
 
-        if (!isLightTheme) ...[Color(0xFFF2C9A5), Color(0xFFF69FBB), Color(0xFFB6E8A4),
+        if (!isLightTheme) Color(0xFFF2C9A5), Color(0xFFF69FBB), Color(0xFFB6E8A4),
           Color(0xFF51cfa0), Color(0xFF5e72a3), Color(0xFF323F4B),  Color(0xFFF2C9A5),
           Color(0xFFF69FBB), Color(0xFFB6E8A4), Color(0xFF51cfa0), Color(0xdd9575cd),]
-      ],
+      ,
       textColor: isLightTheme ? Color(0xFF000000) : Color(0xA6A6A6),
       iconColor: isLightTheme ? Color(0xFF000000) : Color(0xFF757575),
       toggleButtonColor: isLightTheme ? Colors.black : Colors.white,
